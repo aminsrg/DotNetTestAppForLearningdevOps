@@ -19,8 +19,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set lowercase repo owner
+        run: echo "REPO_OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+
       - name: Build Docker image
-        run: docker build -f MyApplication/Dockerfile -t ghcr.io/aminsrg/my-dotnet-app:${{ github.sha }} .
+        run: docker build -f MyApplication/Dockerfile -t ghcr.io/$REPO_OWNER_LC/my-dotnet-app:${{ github.sha }} MyApplication
 
       - name: Push Docker image
-        run: docker push ghcr.io/aminsrg/my-dotnet-app:${{ github.sha }}
+        run: docker push ghcr.io/$REPO_OWNER_LC/my-dotnet-app:${{ github.sha }}
+
