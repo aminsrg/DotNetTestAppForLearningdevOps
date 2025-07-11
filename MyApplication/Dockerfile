@@ -2,10 +2,11 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
 WORKDIR /app
+
+# Expose the ports your app listens on
 EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8443
 
 # Copy the certificate into the container
 COPY ["aspnetapp.pfx", "/https/aspnetapp.pfx"]

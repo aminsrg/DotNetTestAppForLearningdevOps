@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(8080); // HTTP
-    options.ListenAnyIP(8081, listenOptions =>
+    options.ListenAnyIP(8443, listenOptions =>
     {
         listenOptions.UseHttps("/https/aspnetapp.pfx", "YourStrongPassword123");
     });
