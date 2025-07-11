@@ -23,7 +23,7 @@ jobs:
         run: echo "REPO_OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - name: Build Docker image
-        run: docker build   -f MyApplication/Dockerfile -t ghcr.io/$REPO_OWNER_LC/my-dotnet-app:${{ github.sha }} MyApplication
+        run: docker build   -f MyApplication/Dockerfile -t ghcr.io/$REPO_OWNER_LC/my-dotnet-app:${{ github.sha }} .
 
       - name: Push Docker image
         run: docker push ghcr.io/$REPO_OWNER_LC/my-dotnet-app:${{ github.sha }}
