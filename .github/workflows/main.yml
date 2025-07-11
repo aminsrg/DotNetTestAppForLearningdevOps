@@ -1,26 +1,26 @@
-name: Build .NET Web API
+name: Build and Publish Docker Image
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x' # or 7.0.x depending on your project
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/my-dotnet-app:${{ github.sha }} .
 
-    - name: Build project
-      run: dotnet build --configuration Release --no-restore
+      - name: Push Docker image
+        run: docker push ghcr.io/${{ github.repository_owner }}/my-dotnet-app:${{ github.sha }}
