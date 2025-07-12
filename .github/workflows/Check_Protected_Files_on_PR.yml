@@ -18,7 +18,7 @@ jobs:
         run: |
           protected_files=(
             "Jenkinsfile"
-            "oc.WMM.Api/nlog.config"
+            "MyApplication/nlog.config"
           )
           for file in "${protected_files[@]}"; do
             if echo "${{ steps.changes.outputs.all_changed_files }}" | grep -qw "$file"; then
